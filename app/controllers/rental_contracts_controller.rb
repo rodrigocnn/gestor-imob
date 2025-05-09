@@ -49,7 +49,7 @@ class RentalContractsController < ApplicationController
   
     # Only allow a trusted parameter "white list" through.
     def rental_contract_params
-      params.require(:rental_contract).permit(:clientId, :propertyId, :startDate, :endDate, :monthlyRent, :depositAmount, :status)
+      params.require(:rental_contract).permit(:client_id, :property_id, :start_date, :end_date, :monthly_rent, :deposit_amount, :status)
     end
   end
   
