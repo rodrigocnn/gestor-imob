@@ -49,7 +49,23 @@ class PropertiesController < ApplicationController
   
     # Only allow a trusted parameter "white list" through.
     def property_params
-      params.require(:property).permit(:title, :negotiationType, :description, :bedrooms, :bathrooms, :suites, :price, :latitude, :longitude, :neighborhood, :cityId, :state, :address, :propertyTypeId, :ownerId)
+      params.require(:property).permit(
+        :title,
+        :negotiation_type, 
+        :description,
+        :bedrooms,
+        :bathrooms,
+        :suites,
+        :price,
+        :latitude,
+        :longitude,
+        :neighborhood,
+        :city_id,        
+        :state,
+        :address,
+        :property_type_id, 
+        :owner_id          
+      )
     end
   end
   
