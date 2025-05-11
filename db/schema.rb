@@ -11,13 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
-  create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "cities", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "clients", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "cpf"
@@ -26,7 +29,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "neighborhoods", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "neighborhoods", force: :cascade do |t|
     t.string "name"
     t.bigint "city_id", null: false
     t.datetime "created_at", null: false
@@ -34,7 +37,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
     t.index ["city_id"], name: "index_neighborhoods_on_city_id"
   end
 
-  create_table "owners", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "owners", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "cpf"
@@ -43,7 +46,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "properties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "properties", force: :cascade do |t|
     t.string "title"
     t.string "negotiation_type"
     t.text "description"
@@ -66,13 +69,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
     t.index ["property_type_id"], name: "index_properties_on_property_type_id"
   end
 
-  create_table "property_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "property_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "rent_payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "rent_payments", force: :cascade do |t|
     t.bigint "rental_contract_id", null: false
     t.datetime "due_date"
     t.datetime "payment_date"
@@ -83,7 +86,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
     t.index ["rental_contract_id"], name: "index_rent_payments_on_rental_contract_id"
   end
 
-  create_table "rental_contracts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "rental_contracts", force: :cascade do |t|
     t.bigint "client_id", null: false
     t.bigint "property_id", null: false
     t.datetime "start_date"
@@ -97,7 +100,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
     t.index ["property_id"], name: "index_rental_contracts_on_property_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
