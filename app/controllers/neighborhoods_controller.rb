@@ -5,10 +5,17 @@ class NeighborhoodsController < ApplicationController
       @neighborhoods = Neighborhood.all
       render json: @neighborhoods
     end
+
+    def find_by_city
+        city_id = params[:city_id]
+        @neighborhoods = Neighborhood.where(city_id:city_id)
+        render json: @neighborhoods
+    end
   
     def show
       render json: @neighborhood
     end
+    
   
     def create
       @neighborhood = Neighborhood.new(neighborhood_params)

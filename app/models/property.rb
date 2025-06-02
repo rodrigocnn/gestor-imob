@@ -1,7 +1,9 @@
 class Property < ApplicationRecord
+  has_many :rental_contracts
   belongs_to :city
   belongs_to :property_type
   belongs_to :owner
+  before_destroy :ensure_no_rental_contracts
 
   validates :title,
             presence: { message: "não pode ficar em branco" },
@@ -9,7 +11,7 @@ class Property < ApplicationRecord
 
   validates :negotiation_type,
             presence: { message: "não pode ficar em branco" },
-            inclusion: { in: %w[venda aluguel], message: "deve ser 'venda' ou 'aluguel'" }
+            inclusion: { in: %w[Venda Aluguel], message: "deve ser 'Venda' ou 'Aluguel'" }
 
   validates :description,
             presence: { message: "não pode ficar em branco" },
@@ -47,4 +49,15 @@ class Property < ApplicationRecord
   validates :city, presence: { message: "deve estar associado a uma cidade válida" }
   validates :property_type, presence: { message: "deve estar associado a um tipo de imóvel válido" }
   validates :owner, presence: { message: "deve estar associado a um proprietário válido" }
+
+
+
+  private
+
+  def ensure_no_rental_contracts
+    if rental_contracts.exists?
+      errors.add(:base, "Este imóvel está vinculado a um contrato e não pode ser excluído.")
+      throw :abort
+    end
+  end
 end

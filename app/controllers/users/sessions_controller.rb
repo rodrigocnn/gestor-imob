@@ -3,7 +3,6 @@ class Users::SessionsController < Devise::SessionsController
 
   private
 
-  # Após o login, retorne o usuário e o token JWT
   def respond_with(resource, _opts = {})
     # Usamos o método `encode` para gerar o JWT
     token = Warden::JWTAuth::UserEncoder.new.call(resource, :user, nil)

@@ -15,7 +15,5 @@ test:
   database: gestor_imob_test
 
 production:
-  <<: *default
-  database: gestor_imob_production
-  username: gestor_imob
-  password: <%= ENV["GESTOR_IMOB_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
