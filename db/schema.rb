@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_03_122438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,8 +64,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
     t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "property_code"
     t.index ["city_id"], name: "index_properties_on_city_id"
     t.index ["owner_id"], name: "index_properties_on_owner_id"
+    t.index ["property_code"], name: "index_properties_on_property_code", unique: true
     t.index ["property_type_id"], name: "index_properties_on_property_type_id"
   end
 
@@ -96,7 +98,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_10_144815) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "contract_code"
     t.index ["client_id"], name: "index_rental_contracts_on_client_id"
+    t.index ["contract_code"], name: "index_rental_contracts_on_contract_code", unique: true
     t.index ["property_id"], name: "index_rental_contracts_on_property_id"
   end
 

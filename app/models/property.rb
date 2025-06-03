@@ -5,6 +5,8 @@ class Property < ApplicationRecord
   belongs_to :owner
   before_destroy :ensure_no_rental_contracts
 
+  after_create :generate_property_code
+
   validates :title,
             presence: { message: "não pode ficar em branco" },
             length: { minimum: 5, message: "deve ter pelo menos 5 caracteres" }
@@ -59,5 +61,11 @@ class Property < ApplicationRecord
       errors.add(:base, "Este imóvel está vinculado a um contrato e não pode ser excluído.")
       throw :abort
     end
+  end
+
+  def generate_property_code
+    date = Time.current.strftime("%Y%m%d")
+    code = "IM-#{date}-#{id}"
+    update_column(:property_code, code)
   end
 end
