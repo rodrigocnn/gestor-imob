@@ -11,14 +11,13 @@ gem "devise"
 gem "devise-jwt"
 
 
-
-
 group :development, :test do
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "debug", platforms: [ :mri ]
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
   gem "rspec-rails"
   gem "shoulda-matchers"
+  gem "factory_bot_rails"
 end
 
 

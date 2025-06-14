@@ -1,5 +1,4 @@
 class Client < ApplicationRecord
-
     has_many :rental_contracts
 
     validates :name,
@@ -19,7 +18,7 @@ validates :cpf,
 
 validates :phone,
     presence: { message: "não pode ficar em branco" },
-    format: { 
+    format: {
         with: /\A\(\d{2}\)\s?\d{4,5}-\d{4}\z/,
         message: "deve estar no formato (00) 00000-0000 ou (00) 0000-0000"
       }

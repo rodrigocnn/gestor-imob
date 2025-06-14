@@ -4,21 +4,30 @@ class RentalContract < ApplicationRecord
 
   after_create :generate_contract_code
 
+# Validações
+validates :client_id,
+          :property_id,
+          :start_date,
+          :end_date,
+          presence: { message: "não pode ficar em branco" }
 
-  # Validações
-  validates :client_id, presence: { message: "Cliente é obrigatório" }
-  validates :property_id, presence: { message: "Propriedade é obrigatória" }
-  validates :start_date, presence: { message: "Data de início é obrigatória" }
-  validates :end_date, presence: { message: "Data de término é obrigatória" }
-  validates :monthly_rent, presence: { message: "Valor do aluguel é obrigatório" },
-                           numericality: { greater_than_or_equal_to: 0, message: "O valor do aluguel deve ser um número positivo" }
-  validates :deposit_amount, presence: { message: "Valor do depósito é obrigatório" },
-                             numericality: { greater_than_or_equal_to: 0, message: "O valor do depósito deve ser um número positivo" }
-  validates :status, presence: { message: "Status é obrigatório" }, inclusion: { in: [ "ativo", "inativo" ], message: "%{value} não é um status válido" }
+  validates :monthly_rent,
+            presence: { message: "Valor do aluguel é obrigatório" },
+            numericality: { greater_than_or_equal_to: 0, message: "O valor do aluguel deve ser um número positivo" }
 
-  # Validação para garantir que a data de término seja posterior à data de início
-  validate :end_date_after_start_date
+  validates :deposit_amount,
+            presence: { message: "Valor do depósito é obrigatório" },
+            numericality: { greater_than_or_equal_to: 0, message: "O valor do depósito deve ser um número positivo" }
+
+  validates :status,
+            presence: { message: "Status é obrigatório" },
+            inclusion: { in: [ "ativo", "inativo" ], message: "%{value} não é um status válido" }
+
   validates :contract_code, uniqueness: true, allow_nil: true
+
+  # Validação customizada
+
+  validate :end_date_after_start_date
 
   private
 
@@ -28,9 +37,8 @@ class RentalContract < ApplicationRecord
     end
   end
 
-
   def generate_contract_code
-    date = Time.current.strftime("%Y%m%d")  
+    date = Time.current.strftime("%Y%m%d")
     code = "CONTRATO-#{date}-#{id}"
     update_column(:contract_code, code)
   end
